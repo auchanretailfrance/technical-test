@@ -26,7 +26,7 @@ public class TestProductRepository {
     private MongoTemplate mongoTemplate;
 
     @Test
-    public void insertProduct(){
+    public void insertProduct_should_create_document_in_database(){
         Product p = new Product(
                 "TestRef",
                 "TestName",
