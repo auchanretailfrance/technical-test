@@ -56,6 +56,7 @@ public class ProductsController {
         return "Product with reference " + productDTO.getReference() + " created successfully";
     }
 
+    @CrossOrigin
     @GetMapping(value = "", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> getAllProducts() throws ProductNotFoundException {
