@@ -1,2 +1,7 @@
-server:
-  port: 8080
+spring.data.mongodb.database=projet0
+spring.data.mongodb.user=amalfares
+spring.data.mongodb.password=amalfares
+spring.data.mongodb.port=8080
+spring.data.mongodb.host=localhost
+
+
