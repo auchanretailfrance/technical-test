@@ -24,7 +24,7 @@ public class PersonneServiceImpl implements PersonneService {
 	
 	@Override
 	public Personne save(Personne personne) {
-		return PersonneService.save(personne);
+		return PersonneRepository.save(personne);
 	}
 	
 
