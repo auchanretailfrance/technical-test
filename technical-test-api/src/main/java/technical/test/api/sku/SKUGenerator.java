@@ -1,4 +1,4 @@
-package technical.test.api.utils;
+package technical.test.api.sku;
 
 import org.springframework.stereotype.Component;
 
