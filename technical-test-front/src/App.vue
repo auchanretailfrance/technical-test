@@ -24,11 +24,10 @@ defineComponent({
       </q-toolbar>
     </q-header>
     <!-- Page content -->
-    <q-page-container>
+    <q-page-container style="width: 100%;">
       <router-view />
     </q-page-container>
   </q-layout>
-
 </template>
 
 <style scoped>

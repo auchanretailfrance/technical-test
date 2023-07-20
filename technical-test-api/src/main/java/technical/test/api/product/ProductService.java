@@ -21,8 +21,14 @@ public class ProductService {
         if (productDTO.sku() == null) {
             return save(productDTO);
         }
-        return productRepository.findById(productDTO.sku())
-                .flatMap(product -> save(product, productDTO));
+        return productRepository.existsById(productDTO.sku())
+                .flatMap(exists -> {
+                    if (exists) {
+                        return Mono.error(new IllegalArgumentException("Product with SKU " + productDTO.sku() + " already exists."));
+                    } else {
+                        return save(productDTO);
+                    }
+                });
     }
 
     @Transactional
@@ -30,7 +36,7 @@ public class ProductService {
         log.info("Call modifyProduct with params : sku={}, productDTO={}", sku, productDTO);
         return productRepository.findById(sku)
                 .map(product -> product.modify(productDTO))
-                .map(this::toProductDto);
+                .map(this::toProductDto).flatMap(this::save);
     }
 
     @Transactional
@@ -42,7 +48,7 @@ public class ProductService {
                         .description(productDTO.description())
                         .price(productDTO.price())
                         .category(productDTO.category()))
-                .map(this::toProductDto);
+                .map(this::toProductDto).flatMap(this::save);
     }
 
     public Mono<ProductDTO> getProduct(String sku) {
@@ -70,7 +76,8 @@ public class ProductService {
     }
 
     private String getSku(ProductDTO productDTO) {
-        if (productDTO.sku() == null) {
+        String sku = productDTO.sku();
+        if (sku == null || sku.equals("")) {
             return SKUGenerator.generateSku();
         }
         return productDTO.sku();

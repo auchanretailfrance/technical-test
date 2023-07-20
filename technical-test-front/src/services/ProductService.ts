@@ -3,7 +3,7 @@ import { type Product } from "@/models/Product";
 
 const BASE_URL = 'http://localhost:8080/api';
 
-export const getProducts = async() => {
+export const getProducts = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/products`);
         return response.data;
@@ -12,7 +12,7 @@ export const getProducts = async() => {
     }
 }
 
-export const getProduct = async(productId: String) => {
+export const getProduct = async (productId: String) => {
     try {
         const response = await axios.get(`${BASE_URL}/products/${productId}`);
         return response.data;
@@ -30,8 +30,8 @@ export const addProduct = async (productData: Product) => {
     }
 }
 
-export const updateProduct = async (productId: String, productData: Product, isPartialUpdate: boolean) => {
-    const method = isPartialUpdate ? 'patch': 'put';
+export const updateProduct = async (productId: String, productData: Product) => {
+    const method = await isPartialUpdate(productId, productData) ? 'patch' : 'put';
     try {
         const response = await axios[method](`${BASE_URL}/products/${productId}`, productData);
         return response.data;
@@ -47,4 +47,24 @@ export const deleteProduct = async (productId: String) => {
     } catch (error) {
         throw new Error('Error while deleting product.');
     }
+}
+
+async function isPartialUpdate(productId: String, productData: Product) {
+    try {
+        const existingProduct = await getProduct(productId);
+
+        const keys = Object.keys(productData);
+        for (const key of keys) {
+            if (productData[key] !== existingProduct[key]) {
+                // Une différence a été trouvée, il s'agit donc d'une mise à jour partielle
+                return true;
+            }
+        } 
+        return false;
+    } catch (error) {
+        // Gérer les erreurs éventuelles ici
+        console.error('Error while checking partial update.', error);
+        throw new Error('Error while checking partial update.');
+    }
+
 }
