@@ -5,12 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>technical-test-api</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.9.RELEASE</version>
+        <relativePath />
     </parent>
 
     <dependencies>
@@ -36,7 +37,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.18</version>
+            <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
