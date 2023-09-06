@@ -1,15 +1,31 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <h1> Add a Author </h1>
+    <AddAuthor></AddAuthor>
+    <hr>
+    <hr>
+
+    <h1> Add a Book </h1>
+    <AddBook></AddBook>
+    <hr>
+    <hr>
+    <h1> List of books </h1>
+    <ListBooks></ListBooks>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddBook from './components/AddBookComponent.vue';
+import AddAuthor from './components/AddAuthorComponent.vue'
+import ListBooks from './components/ListBooksComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AddBook,
+    AddAuthor,
+    ListBooks,
   }
 }
 </script>
