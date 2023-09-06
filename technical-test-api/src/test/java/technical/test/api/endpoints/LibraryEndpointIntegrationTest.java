@@ -12,11 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import technical.test.api.DTO.AuthorDTO;
+import technical.test.api.DTO.BookDTO;
 import technical.test.api.TestSupport;
-import technical.test.api.representations.AuthorRepresentation;
-import technical.test.api.representations.BookRepresentation;
-import technical.test.api.storage.models.Author;
-import technical.test.api.storage.models.Book;
+import technical.test.api.entities.Author;
+import technical.test.api.entities.Book;
 
 import java.util.List;
 
@@ -43,9 +43,9 @@ public class LibraryEndpointIntegrationTest {
     @Test
     public void given_author_should_add_entry_in_database() {
         // Given
-        AuthorRepresentation author = AuthorRepresentation.builder()
-                .firstname("isaac")
-                .lastname("asimov")
+        AuthorDTO author = AuthorDTO.builder()
+                .firstName("isaac")
+                .lastName("asimov")
                 .birthdate(1920)
                 .id("isaac_asimov")
                 .build();
@@ -61,7 +61,7 @@ public class LibraryEndpointIntegrationTest {
                 ).exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(AuthorRepresentation.class)
+                .expectBody(AuthorDTO.class)
                 .returnResult()
                 .getResponseBody();
 
@@ -72,11 +72,11 @@ public class LibraryEndpointIntegrationTest {
     @Test
     public void given_book_should_add_entry_in_database() {
         // Given
-        BookRepresentation book = BookRepresentation.builder()
+        BookDTO book = BookDTO.builder()
                 .isbn("1234-5678-90")
                 .title("Fondation")
                 .releaseDate(1951)
-                .authorId("isaac_asimov")
+                .author("isaac_asimov")
                 .build();
 
         // When
@@ -91,7 +91,7 @@ public class LibraryEndpointIntegrationTest {
                 ).exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(BookRepresentation.class)
+                .expectBody(BookDTO.class)
                 .returnResult()
                 .getResponseBody();
 
@@ -106,14 +106,14 @@ public class LibraryEndpointIntegrationTest {
                 .then(testSupport.loadAuthor()).block();
 
         // when
-        List<BookRepresentation> books = webTestClient
+        List<BookDTO> books = webTestClient
                 .get()
                 .uri(uri -> uri.path("/library/books")
                         .build()
                 ).exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(BookRepresentation.class)
+                .expectBodyList(BookDTO.class)
                 .returnResult()
                 .getResponseBody();
 
@@ -127,7 +127,7 @@ public class LibraryEndpointIntegrationTest {
                         .then(testSupport.loadAuthor()).block();
 
         // when
-        List<BookRepresentation> books = webTestClient
+        List<BookDTO> books = webTestClient
                 .get()
                 .uri(uri -> uri.path("/library/books")
                         .queryParam("authorRefId", "isaac_asimov")
@@ -137,7 +137,7 @@ public class LibraryEndpointIntegrationTest {
                 ).exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(BookRepresentation.class)
+                .expectBodyList(BookDTO.class)
                 .returnResult()
                 .getResponseBody();
 

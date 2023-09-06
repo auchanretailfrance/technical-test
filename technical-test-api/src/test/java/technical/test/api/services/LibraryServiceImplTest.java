@@ -3,9 +3,8 @@ package technical.test.api.services;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,15 +12,19 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 import reactor.test.StepVerifier;
 import technical.test.api.TestSupport;
-import technical.test.api.storage.repositories.BookRepository;
+import technical.test.api.repositories.AuthorRepository;
+import technical.test.api.repositories.BookRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class LibraryServiceImplTest {
     @Resource
-    private LibraryServiceImpl libraryServiceImpl;
+    private LibraryService libraryServiceImpl;
     @Resource
     private  BookRepository bookRepository;
+
+    @Resource
+    private AuthorRepository authorRepository;
     @Resource
     TestSupport testSupport;
 
@@ -32,18 +35,20 @@ class LibraryServiceImplTest {
         mongoDBContainer.start();
     }
 
-    @AfterEach
+    @BeforeEach
     void clear() {
         bookRepository.deleteAll().block();
+        authorRepository.deleteAll().block();
     }
+
 
     @Test
     void registerAuthor() {
         StepVerifier.create(libraryServiceImpl.registerAuthor("Isaac","Asimov", 1920))
                 .expectSubscription()
                 .expectNextMatches(author -> author.getBirthdate() == 1920
-                        && author.getFirstname().equals("Isaac")
-                        && author.getLastname().equals("Asimov")
+                        && author.getFirstName().equals("Isaac")
+                        && author.getLastName().equals("Asimov")
                         && author.getId().equals("isaac_asimov"))
                 .verifyComplete();
     }
@@ -55,7 +60,7 @@ class LibraryServiceImplTest {
                 .expectNextMatches(book -> StringUtils.equals(book.getIsbn(), "1234-5678-90")
                         && StringUtils.equals(book.getTitle(), "Fondation")
                         && book.getReleaseDate() == 1951
-                        && StringUtils.equals(book.getAuthorId(), "isaac_asimov"))
+                        && StringUtils.equals(book.getAuthor(), "isaac_asimov"))
                 .verifyComplete();
     }
 
