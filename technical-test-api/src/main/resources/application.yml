@@ -1,2 +1,13 @@
 server:
   port: 18080
+
+
+spring:
+  data:
+    mongodb:
+      username: myTester
+      password: auchanPassword
+      database: auchan
+      port: 27017
+      host: localhost
+      auto-index-creation: true
