@@ -47,9 +47,16 @@ public class LibraryService {
     // --------------------------------------
 
 
-    public Flux<BookDTO> findAllBooks() {
+    public Flux<BookViewDTO> findAllBooks() {
         return this.bookRepository.findAll()
-                .map(this.bookMapper::bookToBookDTO);
+                .flatMap(
+                book -> this.authorRepository.findById(book.getAuthor())
+                        .map(author -> {
+                            String name = author.getFirstName() + " " + author.getLastName();
+                            return this.bookMapper.bookToBookViewDTO(book,name);
+                        })
+
+        );
     }
 
 

@@ -40,4 +40,10 @@ public class LibraryController {
         return this.libraryService.findAllAuthors();
     }
 
+    @GetMapping("/books")
+    public Flux<BookViewDTO> getAllBooks()
+    {
+        return this.libraryService.findAllBooks();
+    }
+
 }
