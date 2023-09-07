@@ -3,12 +3,11 @@
     <h1> Add a Author </h1>
     <AddAuthor></AddAuthor>
     <hr>
-    <hr>
 
     <h1> Add a Book </h1>
     <AddBook></AddBook>
     <hr>
-    <hr>
+    
     <h1> List of books </h1>
     <ListBooks></ListBooks>
 

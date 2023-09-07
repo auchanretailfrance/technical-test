@@ -25,7 +25,7 @@
     </div>
     <div class = "row">
         <div class="col">
-            <button type="button" class="btn btn-success" @click="sendBook()">Create</button>
+            <button type="button" class="btn btn-success" @click="sendBook()" :disabled="!isValid">Create</button>
         </div>
         
     </div>
