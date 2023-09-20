@@ -42,7 +42,7 @@ export default {
   methods: {
     addBook() {
       fetch(
-          `http://localhost:18080/library/books?isbn=${this.isbn}&title=${this.title}&releaseDateYear=${this.releasedDate}&authorRefId=${this.author}`,
+          `http://host.docker.internal:18080/library/books?isbn=${this.isbn}&title=${this.title}&releaseDateYear=${this.releasedDate}&authorRefId=${this.author}`,
           {
             method: 'POST',
             headers: {

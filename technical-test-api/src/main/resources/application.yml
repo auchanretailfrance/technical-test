@@ -1,2 +1,7 @@
 server:
-  port: 18080
+  port: ${PORT}
+spring:
+  data:
+    mongodb:
+      database: library
+      host: host.docker.internal

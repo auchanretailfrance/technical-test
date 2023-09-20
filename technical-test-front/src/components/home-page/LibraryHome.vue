@@ -60,7 +60,7 @@ export default {
   methods: {
     filter() {
       fetch(
-          `http://localhost:18080/library/books?yearFrom=${this.minDate}&yearTo=${this.maxDate}&authorRefId=${this.author}`)
+          `http://host.docker.internal:18080/library/books?yearFrom=${this.minDate}&yearTo=${this.maxDate}&authorRefId=${this.author}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -76,7 +76,7 @@ export default {
       this.loadInitialBooks();
     },
     loadInitialBooks() {
-      fetch('http://localhost:18080/library/books', {
+      fetch('http://host.docker.internal:18080/library/books', {
         method: 'GET'
       }).then((response) => {
         if (response.ok) {
@@ -87,7 +87,7 @@ export default {
       });
     },
     loadAuthors() {
-      fetch('http://localhost:18080/library/authors', {
+      fetch('http://host.docker.internal:18080/library/authors', {
         method: 'GET'
       }).then((response) => {
         if (response.ok) {
