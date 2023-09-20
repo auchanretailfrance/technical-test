@@ -1,5 +1,5 @@
 <template>
-  <h1>THE LIBRARY</h1>
+  <h1>MY LIBRARY</h1>
   <router-view></router-view>
 </template>
 
