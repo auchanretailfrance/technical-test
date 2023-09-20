@@ -4,4 +4,4 @@ spring:
   data:
     mongodb:
       database: library
-      host: host.docker.internal
+      host: technical-test-db
