@@ -46,13 +46,18 @@ public class LibraryServiceImpl implements LibraryService{
     }
 
     @Override
+    public Flux<Author> findAllAuthors() {
+        return authorRepository.findAll();
+    }
+
+    @Override
     public Flux<Book> findBookByAuthorAndDateBetween(String authorId, Integer releaseDateMin, Integer releaseDateMax) {
         Integer rangeMin = releaseDateMin == null ? 0 : releaseDateMin;
         Integer rangeMax = releaseDateMax == null ? LocalDateTime.now().getYear() : releaseDateMax;
 
         Range<Integer> range = Range.from(Range.Bound.inclusive(rangeMin)).to(Range.Bound.inclusive(rangeMax));
 
-        if(authorId == null){
+        if(authorId == null || authorId.trim().isEmpty()){
             return bookRepository.findBookByReleaseDateBetween(range);
         }
         return bookRepository.findBookByAuthorIdAndReleaseDateBetween(authorId, range);

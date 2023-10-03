@@ -13,6 +13,7 @@ import technical.test.api.services.LibraryService;
 @RestController
 @RequestMapping("/library")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:8080")
 public class LibraryController {
 
     private final LibraryService libraryService;
@@ -46,6 +47,13 @@ public class LibraryController {
                                                  @RequestParam(required = false) Integer birthdate)
     {
         return this.libraryService.registerAuthor(firstname, lastname, birthdate)
+                .map(authorMapper::authorToAuthorRepresentation);
+    }
+
+    @GetMapping("/authors")
+    public Flux<AuthorRepresentation> getAllAuthors()
+    {
+        return this.libraryService.findAllAuthors()
                 .map(authorMapper::authorToAuthorRepresentation);
     }
 }

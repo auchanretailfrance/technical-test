@@ -10,6 +10,7 @@ public interface LibraryService {
     Mono<Author> registerAuthor(String firstName, String lastName, Integer birthDate);
     Mono<Book> registerBook(String isbn, String title, Integer releaseDate, String authorId);
     Flux<Book> findAllBooks();
+    Flux<Author> findAllAuthors();
     Flux<Book> findBookByAuthorAndDateBetween(String authorId, Integer releaseDateMin, Integer releaseDateMax);
 
 }
