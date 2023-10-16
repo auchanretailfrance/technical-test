@@ -1,2 +1,15 @@
 server:
   port: 18080
+
+spring:
+  data:
+    mongodb:
+      database: library
+      port: 27017
+      username: auchan
+      password: password
+      host: localhost
+
+springdoc:
+  swagger-ui:
+    path: /swagger

@@ -1,3 +1,17 @@
+# **`Documentation`**
+
+## **`API`**
+### Swagger
+The swagger is available at this address after launching the application : http://localhost:18080/swagger
+
+## **`Front`**
+### Install
+```npm install --legacy-peer-deps```
+### Launch
+```npm run serve```
+
+Available at : http://localhost:8080/
+
 # **`Technical test`**
 
 Salut et bienvenue ici. Auchan te propose de consacrer un peu de temps pour nous exposer tes talents.
