@@ -3,7 +3,7 @@ package technical.test.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import technical.test.api.services.LibraryService;
+import technical.test.api.adapter.library.LibraryService;
 
 @Component
 public class TestSupport {

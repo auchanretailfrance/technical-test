@@ -3,29 +3,30 @@ package technical.test.api.endpoints;
 
 import jakarta.annotation.Resource;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import technical.test.api.TestInfraConfig;
 import technical.test.api.TestSupport;
-import technical.test.api.representations.AuthorRepresentation;
-import technical.test.api.representations.BookRepresentation;
-import technical.test.api.storage.models.Author;
-import technical.test.api.storage.models.Book;
+import technical.test.api.adapter.library.AuthorRepresentation;
+import technical.test.api.adapter.library.BookRepresentation;
+import technical.test.api.adapter.storage.models.AuthorDocument;
+import technical.test.api.adapter.storage.models.BookDocument;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient(timeout = "20000")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LibraryEndpointIntegrationTest {
+class LibraryEndpointIntegrationTest extends TestInfraConfig {
     @Autowired
     private WebTestClient webTestClient;
     @Autowired
@@ -34,10 +35,10 @@ public class LibraryEndpointIntegrationTest {
     @Resource
     TestSupport testSupport;
 
-    @Before
+    @BeforeEach
     public void cleanup() {
-        reactiveMongoOperations.dropCollection(Book.class).block();
-        reactiveMongoOperations.dropCollection(Author.class).block();
+        reactiveMongoOperations.dropCollection(BookDocument.class).block();
+        reactiveMongoOperations.dropCollection(AuthorDocument.class).block();
     }
 
     @Test
@@ -124,7 +125,7 @@ public class LibraryEndpointIntegrationTest {
     public void given_books_in_database_should_return_books_based_on_criteria() {
         // given
         testSupport.loadBooks()
-                        .then(testSupport.loadAuthor()).block();
+                .then(testSupport.loadAuthor()).block();
 
         // when
         List<BookRepresentation> books = webTestClient
