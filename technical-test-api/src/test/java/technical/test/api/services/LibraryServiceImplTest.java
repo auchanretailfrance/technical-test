@@ -11,7 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import reactor.test.StepVerifier;
 import technical.test.api.TestInfraConfig;
 import technical.test.api.TestSupport;
-import technical.test.api.storage.repositories.BookRepository;
+import technical.test.api.adapter.library.LibraryServiceImpl;
+import technical.test.api.adapter.storage.repositories.BookRepositoryImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,7 +20,7 @@ class LibraryServiceImplTest extends TestInfraConfig {
     @Resource
     private LibraryServiceImpl libraryServiceImpl;
     @Resource
-    private  BookRepository bookRepository;
+    private BookRepositoryImpl bookRepository;
     @Resource
     TestSupport testSupport;
 
@@ -32,10 +33,10 @@ class LibraryServiceImplTest extends TestInfraConfig {
     void registerAuthor() {
         StepVerifier.create(libraryServiceImpl.registerAuthor("Isaac","Asimov", 1920))
                 .expectSubscription()
-                .expectNextMatches(author -> author.getBirthdate() == 1920
-                        && author.getFirstname().equals("Isaac")
-                        && author.getLastname().equals("Asimov")
-                        && author.getId().equals("isaac_asimov"))
+                .expectNextMatches(author -> author.birthdate() == 1920
+                        && author.firstname().equals("Isaac")
+                        && author.lastname().equals("Asimov")
+                        && author.id().equals("isaac_asimov"))
                 .verifyComplete();
     }
 
@@ -43,10 +44,10 @@ class LibraryServiceImplTest extends TestInfraConfig {
     void registerBook() {
         StepVerifier.create(libraryServiceImpl.registerBook("1234-5678-90","Fondation", 1951, "isaac_asimov"))
                 .expectSubscription()
-                .expectNextMatches(book -> StringUtils.equals(book.getIsbn(), "1234-5678-90")
-                        && StringUtils.equals(book.getTitle(), "Fondation")
-                        && book.getReleaseDate() == 1951
-                        && StringUtils.equals(book.getAuthorId(), "isaac_asimov"))
+                .expectNextMatches(book -> StringUtils.equals(book.isbn(), "1234-5678-90")
+                        && StringUtils.equals(book.title(), "Fondation")
+                        && book.releaseDate() == 1951
+                        && StringUtils.equals(book.authorId(), "isaac_asimov"))
                 .verifyComplete();
     }
 

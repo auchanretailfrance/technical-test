@@ -1,12 +1,10 @@
-package technical.test.api.representations;
+package technical.test.api.adapter.library;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import lombok.With;
 
-@With
 @Builder
 public record AuthorRepresentation(@NotBlank String firstname,
                                    @NotBlank String lastname,

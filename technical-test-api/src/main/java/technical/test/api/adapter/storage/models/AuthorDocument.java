@@ -1,18 +1,12 @@
-package technical.test.api.storage.models;
+package technical.test.api.adapter.storage.models;
 
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import lombok.With;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@With
 @Value
-@Builder
 @Document
-@RequiredArgsConstructor
-public class Author {
+public class AuthorDocument {
     @Id
     String id;
     String firstname;

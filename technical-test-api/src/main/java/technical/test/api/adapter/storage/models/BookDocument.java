@@ -1,20 +1,18 @@
-package technical.test.api.storage.models;
+package technical.test.api.adapter.storage.models;
 
-import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Value
-@Builder
 @Document
 @FieldNameConstants
-public class Book {
+public class BookDocument {
     @Id
     String id;
     String isbn;
     String title;
     Integer releaseDate;
-    String authorId;
+    String author;
 }

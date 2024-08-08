@@ -1,4 +1,4 @@
-package technical.test.api.representations;
+package technical.test.api.adapter.library;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
