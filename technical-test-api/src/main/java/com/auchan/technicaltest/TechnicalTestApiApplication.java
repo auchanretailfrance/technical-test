@@ -1,4 +1,4 @@
-package technical.test.api;
+package com.auchan.technicaltest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
